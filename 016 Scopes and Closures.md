@@ -69,7 +69,7 @@ The "Bag Theory": When a parent function returns a child function, the child fun
 
 The Factory Function Example:
 ```
-def chai_coder(num): # Parent Function
+def git_coder(num): # Parent Function
     
     def actual(x): # Child Function
         return x ** num # Uses 'num' from the parent
@@ -77,8 +77,8 @@ def chai_coder(num): # Parent Function
     return actual # Returning the DEFINITION of the function, not executing it
 
 # We create two "Factories"
-f = chai_coder(2) # f now holds the 'actual' function, and packs 'num=2' in its bag
-g = chai_coder(3) # g now holds the 'actual' function, and packs 'num=3' in its bag
+f = git_coder(2) # f now holds the 'actual' function, and packs 'num=2' in its bag
+g = git_coder(3) # g now holds the 'actual' function, and packs 'num=3' in its bag
 
 # Now we execute them
 print(f(3)) # Outputs 9 (Because 3 ** 2)
@@ -86,7 +86,7 @@ print(g(3)) # Outputs 27 (Because 3 ** 3)
 ```
 
 Why this is powerful:
-Even though ```chai_coder(2)``` finished running and its "house" was destroyed, the ```f``` function still remembered that ```num``` was ```2``` because it carried that memory reference in its Closure (backpack). This pattern is heavily used in advanced Python frameworks like Django.
+Even though ```git_coder(2)``` finished running and its "house" was destroyed, the ```f``` function still remembered that ```num``` was ```2``` because it carried that memory reference in its Closure (backpack). This pattern is heavily used in advanced Python frameworks like Django.
 
 
 Summary & Takeaways
