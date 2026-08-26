@@ -11,11 +11,11 @@ The Golden Rule of Scope Access:
 - You can always look OUT of the house to see the world. (Functions can read Global variables).
 - You can never look IN to the house from the world. (The Global scope cannot read variables trapped inside a function).
 ```
-username = "Chai Aur Code" # GLOBAL SCOPE
+username = "Suraj Kanse" # GLOBAL SCOPE
 
 def my_func():
     balance = 100 # LOCAL SCOPE
-    print(username) # Works! The function can look out and see "Chai Aur Code"
+    print(username) # Works! The function can look out and see "Suraj Kanse"
 
 print(balance) # CRASH! The global scope cannot look into the function's house.
 ```
