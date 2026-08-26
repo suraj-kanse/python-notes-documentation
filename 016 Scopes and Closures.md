@@ -2,7 +2,7 @@ Scope determines where your variables live and who has access to them. Think of 
 
 Understanding this hierarchy, and what happens when a function "packs its bags" to leave the house (Closures), separates junior developers from senior engineers.
 
-The Scope Hierarchy (The House Analogy)
+The Scope Hierarchy (The House Analogy): 
 In Python, whenever you indent code (like inside a ```def``` function or an ```if``` block), you are creating a new Scope.
 - Global Scope (The World): Variables defined at the top level of your file without indentation.
 - Local Scope (The House): Variables defined inside a specific function.
@@ -20,7 +20,7 @@ def my_func():
 print(balance) # CRASH! The global scope cannot look into the function's house.
 ```
 
-The Climbing Algorithm (LEGB Rule)
+The Climbing Algorithm (LEGB Rule): 
 What happens if you have variables with the exact same name? Python follows an strict order of operations to find a variable, often referred to academically as the LEGB Rule (Local, Enclosing, Global, Built-in).
 
 The "Climbing" theory:
@@ -43,7 +43,7 @@ func1()
 # It checked func2 (empty), climbed up to func1 and found 88. It stopped there and never needed to check Global.
 ```
 
-The ```global``` Keyword (And Why to Avoid It)
+The ```global``` Keyword (And Why to Avoid It): 
 If a function tries to modify a global variable, Python will normally prevent it by just creating a brand new local variable with the same name instead.
 
 If you absolutely must force a function to overwrite the Global variable, you use the ```global``` keyword.
@@ -62,7 +62,7 @@ Production Warning: Modifying global variables using the ```global``` keyword is
 
 
 
-Closures & Factory Functions (The "Bag Theory")
+Closures & Factory Functions (The "Bag Theory"): 
 What happens if a function returns another function instead of returning a value?
 
 The "Bag Theory": When a parent function returns a child function, the child function doesn't just leave empty-handed. It packs a "Backpack" (a Closure) containing all the variables from the parent's house that it might need later.
