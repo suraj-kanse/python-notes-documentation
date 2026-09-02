@@ -46,32 +46,71 @@ def get_youtube_transcript(video_id: str) -> str:
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
         
-        # Try fetching English, auto-generated, or Hindi transcripts
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        try:
-            transcript = transcript_list.find_transcript(['en', 'en-US', 'en-GB'])
-        except Exception:
-            # Fallback to generated or any available language, or translated to en
+        ytta = YouTubeTranscriptApi() if hasattr(YouTubeTranscriptApi, '__call__') else None
+        
+        # Method 1: New instance API (v1.x)
+        if ytta and hasattr(ytta, 'fetch'):
             try:
-                transcript = transcript_list.find_generated_transcript(['en', 'hi'])
-                if transcript.language_code != 'en':
-                    transcript = transcript.translate('en')
-            except Exception:
-                # Grab the first available transcript and translate if needed
-                for t in transcript_list:
-                    if t.is_translatable:
-                        transcript = t.translate('en')
-                        break
-                    else:
-                        transcript = t
-                        break
+                # Try fetching english first, then hindi, then whatever is available
+                data = ytta.fetch(video_id, languages=['en', 'en-US', 'hi'])
+                parts = []
+                for entry in data:
+                    if hasattr(entry, 'text'):
+                        parts.append(entry.text)
+                    elif isinstance(entry, dict) and 'text' in entry:
+                        parts.append(entry['text'])
+                return " ".join(parts).strip()
+            except Exception as e:
+                print(f"[DEBUG] Direct instance fetch failed: {e}")
 
-        data = transcript.fetch()
-        full_text = " ".join([entry.get('text', '') for entry in data])
-        return full_text.strip()
+        # Method 2: Static or list method
+        if hasattr(YouTubeTranscriptApi, 'list_transcripts'):
+            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+        elif ytta and hasattr(ytta, 'list'):
+            transcript_list = ytta.list(video_id)
+        else:
+            transcript_list = None
+
+        if transcript_list:
+            # Try finding english, then hindi/generated
+            transcript = None
+            for lang in ['en', 'en-US', 'hi']:
+                try:
+                    transcript = transcript_list.find_transcript([lang])
+                    break
+                except Exception:
+                    pass
+
+            if not transcript:
+                try:
+                    transcript = transcript_list.find_generated_transcript(['en', 'hi'])
+                except Exception:
+                    pass
+
+            if not transcript:
+                # Take first available
+                for t in transcript_list:
+                    transcript = t
+                    break
+
+            if transcript:
+                data = transcript.fetch()
+                parts = []
+                for entry in data:
+                    if hasattr(entry, 'text'):
+                        parts.append(entry.text)
+                    elif isinstance(entry, dict) and 'text' in entry:
+                        parts.append(entry['text'])
+                return " ".join(parts).strip()
+
+        # Method 3: Direct get_transcript
+        if hasattr(YouTubeTranscriptApi, 'get_transcript'):
+            data = YouTubeTranscriptApi.get_transcript(video_id, languages=['en', 'hi'])
+            return " ".join([entry.get('text', '') for entry in data]).strip()
+
     except Exception as e:
         print(f"[WARN] YouTube transcript API fetch failed: {e}")
-        return ""
+    return ""
 
 
 def download_audio_and_transcribe_gemini(video_url: str, api_key: str) -> str:
