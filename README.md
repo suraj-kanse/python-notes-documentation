@@ -91,3 +91,8 @@ https://www.youtube.com/watch?v=...
 
 | Date | Topic | Notes Link | Source |
 |---|---|---|---|
+| 2026-09-02 | Understanding Python Decorators & The Tollbooth Analogy | [01_understanding_python_decorators_and_tollbooth_analogy.md](notes/2026-09-02/01_understanding_python_decorators_and_tollbooth_analogy.md) | [Video](https://youtu.be/ZEKiIwWv9nM?si=uEq-ADaTkXLOYnpM) |
+| 2026-09-02 | Timing Function Execution with Decorators (`@timer`) | [02_timing_function_execution_with_decorators.md](notes/2026-09-02/02_timing_function_execution_with_decorators.md) | [Video](https://youtu.be/ZEKiIwWv9nM?si=uEq-ADaTkXLOYnpM) |
+| 2026-09-02 | Debugging & Logging Function Calls (`@debug`) | [03_debugging_and_logging_function_calls_decorator.md](notes/2026-09-02/03_debugging_and_logging_function_calls_decorator.md) | [Video](https://youtu.be/ZEKiIwWv9nM?si=uEq-ADaTkXLOYnpM) |
+| 2026-09-02 | Caching & Memoization Decorators (`@cache`) | [04_caching_and_memoization_decorator_in_python.md](notes/2026-09-02/04_caching_and_memoization_decorator_in_python.md) | [Video](https://youtu.be/ZEKiIwWv9nM?si=uEq-ADaTkXLOYnpM) |
+
